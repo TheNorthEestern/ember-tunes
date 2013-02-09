@@ -4,6 +4,16 @@ Tunes.Router.map(function() {
   this.route('library');        // this is our default route
 });
 
+Tunes.ApplicationRoute = Ember.Route.extend({
+  events: {
+    // TODO: explain why we put this here instead of a controller
+    queueAlbum: function(album) {
+      // NOTE: we use addObject to prevent queueing duplicates
+      this.controllerFor('playlist').addObject(album);
+    }
+  }
+});
+
 // TODO: explain ApplicationRoute and IndexRoute defaults and why we override
 // here for a different default route
 Tunes.IndexRoute = Ember.Route.extend({
