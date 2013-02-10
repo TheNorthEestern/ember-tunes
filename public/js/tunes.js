@@ -60,6 +60,26 @@ Tunes.PlayerView = Em.View.extend({
 });
 
 Tunes.PlaylistController = Em.ArrayController.extend({
+  currentTrack: null,
+
+  addObject: function(album) {
+    this.get('content').addObject(album);
+
+    // Set the currentTrack if this was the first album queued
+    if (this.get('content').length === 1) {
+      this.set('currentTrack', this.get('tracks.firstObject'));
+    }
+  },
+
+  removeObject: function(album) {
+    this.get('content').removeObject(album);
+
+    // Wipe the currentTrack if this was the last album dequeued
+    if (this.get('content').length === 0) {
+      this.set('currentTrack', this.get('tracks.firstObject'));
+    }
+  },
+
   // NOTE: first CP! we are using instead of doing something similar to
   // backbone screencast to avoid having the implementation diverge from
   // domain model
