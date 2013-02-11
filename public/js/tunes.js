@@ -73,6 +73,56 @@ Tunes.PlayerView = Em.View.extend({
   tagName: 'nav'
 });
 
+Tunes.PlayerController = Em.Controller.extend({
+  needs: ['playlist'],
+
+  currentTrack: Em.computed.alias('controllers.playlist.currentTrack'),
+
+  isPlaying: false,
+
+  init: function(){
+    this._super();
+
+    var audio = new Audio();
+
+    audio.addEventListener('ended', function() {
+      this.get('target').send('next');
+    }.bind(this));
+
+    this.set('audio', audio);
+  },
+
+  play: function() {
+    if (!this.get('audio').src) {
+      return;
+    }
+
+    // NOTE: queue playing the track once all of the current bindings
+    // sync to ensure currentTrack and audio src have been updated
+    Em.run.schedule('sync', this, function() {
+      this.get('audio').play();
+      this.set('isPlaying', true);
+    });
+  },
+
+  pause: function() {
+    this.get('audio').pause();
+    this.set('isPlaying', false);
+  },
+
+  currentTrackChanged: function() {
+    this.get('audio').src = this.get('currentTrack.url');
+
+    if (!this.get('audio').src) {
+      this.pause();
+    }
+
+    if (this.get('isPlaying')) {
+      this.play();
+    }
+  }.observes('currentTrack')
+});
+
 Tunes.PlaylistController = Em.ArrayController.extend({
   currentTrack: null,
 
