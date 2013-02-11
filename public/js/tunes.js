@@ -10,6 +10,10 @@ Tunes.ApplicationRoute = Ember.Route.extend({
     queueAlbum: function(album) {
       // NOTE: we use addObject to prevent queueing duplicates
       this.controllerFor('playlist').addObject(album);
+    },
+
+    dequeueAlbum: function(album) {
+      this.controllerFor('playlist').removeObject(album);
     }
   }
 });
