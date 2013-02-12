@@ -97,11 +97,9 @@ Tunes.PlayerController = Em.Controller.extend({
       return;
     }
 
-    // NOTE: queue playing the track until the beginning of the next
-    // runloop to ensure currentTrack and audio src have been updated
-    // TODO: I would expect Em.run.schedule('sync', ...) to also work
-    // but it does not. Find out why.
-    Em.run.next(this, function() {
+    // NOTE: queue playing the track once all of the current bindings
+    // sync to ensure currentTrack and audio src have been updated
+    Em.run.schedule('sync', this, function() {
       this.get('audio').play();
       this.set('isPlaying', true);
     });
