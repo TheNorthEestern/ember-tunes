@@ -32,7 +32,7 @@
       <h1>Playlist</h1>
       {{render player}}
       <ul class="albums">
-        {{#each controller}}
+        {{#each controller itemController="playlistAlbum"}}
           <li {{bindAttr class=":album current"}}>{{template "album"}}</li>
         {{/each}}
       </ul>
@@ -50,7 +50,7 @@
 
     <script type="text/x-handlebars" data-template-name="album">
       <button class="queue add" {{action queueAlbum this}}><img src="/images/add.png"></button>
-      <button class="queue remove" {{action dequeueAlbum this}}><img src="/images/remove.png"></button>
+      <button class="queue remove" {{action dequeueAlbum this.content}}><img src="/images/remove.png"></button>
       <span class="album-title">{{title}}</span>&nbsp;&nbsp;
       <span class="artist-name">{{artist}}</span>
       <ol class="tracks">
