@@ -86,13 +86,17 @@ Tunes.PlayerController = Em.Controller.extend({
     var audio = new Audio();
 
     audio.addEventListener('ended', function() {
-      this.next();
+      this.get('target').send('next');
     }.bind(this));
 
     this.set('audio', audio);
   },
 
   play: function() {
+    if (!this.get('audio').src) {
+      return;
+    }
+
     // NOTE: queue playing the track until the beginning of the next
     // runloop to ensure currentTrack and audio src have been updated
     // TODO: I would expect Em.run.schedule('sync', ...) to also work
@@ -110,21 +114,15 @@ Tunes.PlayerController = Em.Controller.extend({
 
   currentTrackChanged: function() {
     this.get('audio').src = this.get('currentTrack.url');
-  }.observes('currentTrack'),
 
-  prev: function() {
-    this.get('target').send('prev');
+    if (!this.get('audio').src) {
+      this.pause();
+    }
+
     if (this.get('isPlaying')) {
       this.play();
     }
-  },
-
-  next: function() {
-    this.get('target').send('next');
-    if (this.get('isPlaying')) {
-      this.play();
-    }
-  }
+  }.observes('currentTrack')
 });
 
 Tunes.PlaylistController = Em.ArrayController.extend({
