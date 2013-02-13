@@ -1,6 +1,7 @@
 require "./lib/init"
 
 disable :logging
+set :protection, :except => :frame_options
 set :root, File.dirname(__FILE__) + "/../"
 
 get "/" do
