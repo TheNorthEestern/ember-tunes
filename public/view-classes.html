@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Ember Tunes</title>
+    <meta name="author" content="David Goodlad <david@goodlad.ca>">
+
+    <link rel="stylesheet" href="style/screen.css" media="screen, projection">
+    <link rel="stylesheet" href="style/fancypants.css" media="screen, projection">
+  </head>
+  <body>
+    <script type="text/x-handlebars" data-template-name="application">
+      {{render playlist}}
+      {{outlet}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="library">
+      <h1>Music Library</h1>
+
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="playlist">
+      <h1>Playlist</h1>
+
+    </script>
+
+    <script src="js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="js/vendor/handlebars-1.0.rc.2.js"></script>
+    <script src="js/vendor/ember-1.0.pre.4.js"></script>
+    <script src="js/tunes-view-classes.js"></script>
+  </body>
+</html>
